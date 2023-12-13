@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1702488415 source:/home/jerome/Projects/Taquin/main.c
+	<stdio.h>
+	<stdbool.h>
+	<time.h>
+	<SDL2/SDL.h>
+	"game_tools.h"
+
+1702488869 /home/jerome/Projects/Taquin/game_tools.h
+	<stdlib.h>
+
