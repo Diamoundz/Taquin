@@ -1,5 +1,5 @@
-
 #include "default_includes.h"
+#include "rendering_tools.h"
 
 
 SDL_Window* MakeWindow(int width, int height){

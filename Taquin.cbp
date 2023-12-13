@@ -34,10 +34,22 @@
 		<Linker>
 			<Add option="-lSDL2" />
 		</Linker>
+		<Unit filename="default_includes.h" />
+		<Unit filename="game_core.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="game_core.h" />
+		<Unit filename="game_tools.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="game_tools.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="rendering_tools.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rendering_tools.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

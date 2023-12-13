@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1702497109 source:/home/jerome/Projects/Taquin/main.c
+1702509375 source:/home/jerome/Projects/Taquin/main.c
 	"default_includes.h"
 	"game_tools.h"
 
-1702498820 /home/jerome/Projects/Taquin/game_tools.h
+1702508348 /home/jerome/Projects/Taquin/game_tools.h
 
 1702492471 /home/jerome/Projects/Taquin/default_includes.h
 	<stdlib.h>
@@ -12,12 +12,21 @@
 	<time.h>
 	<SDL2/SDL.h>
 
-1702496822 /home/jerome/Projects/Taquin/rendering_tools.h
+1702498458 /home/jerome/Projects/Taquin/rendering_tools.h
 
-1702496743 source:/home/jerome/Projects/Taquin/game_tools.c
+1702509937 source:/home/jerome/Projects/Taquin/game_tools.c
+	"default_includes.h"
+	"game_tools.h"
+
+1702503258 source:/home/jerome/Projects/Taquin/rendering_tools.c
 	"default_includes.h"
 	"rendering_tools.h"
 
-1702498437 source:/home/jerome/Projects/Taquin/rendering_tools.c
+1702509910 source:/home/jerome/Projects/Taquin/game_core.c
 	"default_includes.h"
+	"rendering_tools.h"
+	"game_tools.h"
+	"game_core.h"
+
+1702503389 /home/jerome/Projects/Taquin/game_core.h
 

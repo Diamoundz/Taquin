@@ -4,8 +4,7 @@
 
 int main(int argc, char* argv[]){
 
-    InitGame();
-    GameLoop();
+    Awake(false);
     return 0;
 }
 
