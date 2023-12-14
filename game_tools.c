@@ -47,6 +47,38 @@ int ConsoleDisplayBoard(int ** board){
     return 0;
 }
 
+int Wait(int millisecconds){
+    fflush(stdout);
+    #ifdef _WIN32
+        Sleep(millisecconds);
+    #else
+        usleep(millisecconds*1000);
+    #endif
+    return 0;
+}
+
+int ShuffleBoard(int ** board, int depth){
+    int moves[4] = {LEFT,RIGHT,UP,DOWN};
+    for(int i = 0; i<depth; i++){
+        int moveId = GetRandomNumber(0,3);
+        Debug(moves[moveId]);
+        if(!MakeMove(board,moves[moveId])){
+            i--;
+        }
+    }
+    return 0;
+}
+
+int DelayedPrint(char * message, int letterIntervalMillisecconds){
+    int len = strlen(message);
+    for(int i = 0; i < len; i++){
+        Wait(letterIntervalMillisecconds);
+        printf("%c",message[i]);
+    }
+    printf("\n");
+    return 0;
+}
+
 bool CheckIfWin(int ** board){
     bool isWin = true;
     for(int i =0; i <BOARD_SIZE;i++){

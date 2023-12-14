@@ -3,7 +3,7 @@
 	"definitions.h"
 	"game_tools.h"
 
-1702554103 /home/jerome/Projects/Taquin/game_tools.h
+1702556472 /home/jerome/Projects/Taquin/game_tools.h
 
 1702553605 /home/jerome/Projects/Taquin/default_includes.h
 	<stdlib.h>
@@ -14,7 +14,7 @@
 
 1702498458 /home/jerome/Projects/Taquin/rendering_tools.h
 
-1702555344 source:/home/jerome/Projects/Taquin/game_tools.c
+1702558857 source:/home/jerome/Projects/Taquin/game_tools.c
 	"definitions.h"
 	"game_tools.h"
 
@@ -22,7 +22,7 @@
 	"definitions.h"
 	"rendering_tools.h"
 
-1702556132 source:/home/jerome/Projects/Taquin/game_core.c
+1702558782 source:/home/jerome/Projects/Taquin/game_core.c
 	"definitions.h"
 	"rendering_tools.h"
 	"game_tools.h"
@@ -30,10 +30,13 @@
 
 1702503389 /home/jerome/Projects/Taquin/game_core.h
 
-1702555645 /home/jerome/Projects/Taquin/definitions.h
+1702557399 /home/jerome/Projects/Taquin/definitions.h
 	<stdlib.h>
 	<stdio.h>
 	<stdbool.h>
 	<time.h>
+	<string.h>
 	<SDL2/SDL.h>
+	<windows.h>
+	<unistd.h>
 

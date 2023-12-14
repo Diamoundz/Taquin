@@ -65,6 +65,7 @@ int Stop(){
 int Start(){
 
     board = MakeBoard();
+    ShuffleBoard(board,300);
     ConsoleDisplayBoard(board);
 
     return 0;
@@ -94,7 +95,7 @@ int TryMakeMove(int dir){
         if(CheckIfWin(board)){
             system("clear");
             ConsoleDisplayBoard(board);
-            printf(" ========= You Won ! =========\n");
+            DelayedPrint("========= You Won ! =========\n",20);
         }
     }
     else{
