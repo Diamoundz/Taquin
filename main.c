@@ -1,10 +1,10 @@
-#include "default_includes.h"
+#include "definitions.h"
 #include "game_tools.h"
 
 
 int main(int argc, char* argv[]){
 
-    Awake(false);
+    Awake();
     return 0;
 }
 

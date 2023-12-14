@@ -1,22 +1,10 @@
-#include "default_includes.h"
+#include "definitions.h"
 #include "rendering_tools.h"
 #include "game_tools.h"
 #include "game_core.h"
 
-#define WIDTH 1600
-#define HEIGHT 900
-
-#define LEFT 0
-#define RIGHT 1
-#define UP 2
-#define DOWN 3
-
-#define BOARD_SIZE 4
-
-#define FPS 60
-
 //define booleans as global variables for ease of manipulation
-bool running = true, isPlayingConsoleVersion = false;
+bool running = true;
 
 //keep track of the board
 int ** board = NULL;
@@ -62,19 +50,22 @@ int GetEvents(){
                 break;
         }
     }
-    return -1;
+    return NO_DIR;
 }
 
 int Stop(){
-    DestroyWindow(wind,rend);
+    if(CONSOLE_VERSION == 0){
+        DestroyWindow(wind,rend);
+    }
+
     return 0;
 }
 
 
 int Start(){
 
-    board = MakeBoard(BOARD_SIZE);
-    ConsoleDisplayBoard(board,BOARD_SIZE);
+    board = MakeBoard();
+    ConsoleDisplayBoard(board);
 
     return 0;
 }
@@ -82,15 +73,15 @@ int Start(){
 int Update(){
     // Get events and input and refresh the screen
 
-    int inputDirection = -1;
-    if(!isPlayingConsoleVersion){
+    int inputDirection = NO_DIR;
+    if(CONSOLE_VERSION == 0){
         inputDirection = GetEvents();
         ClearScreen(rend);
     }
     else{
         inputDirection = GetConsoleInput();
     }
-    if(inputDirection!=-1){
+    if(inputDirection!=NO_DIR){
         TryMakeMove(inputDirection);
     }
 
@@ -98,16 +89,25 @@ int Update(){
 }
 
 int TryMakeMove(int dir){
-    ConsoleDisplayBoard(board,BOARD_SIZE);
+    if(MakeMove(board,dir)){
+        ConsoleDisplayBoard(board);
+        if(CheckIfWin(board)){
+            system("clear");
+            ConsoleDisplayBoard(board);
+            printf(" ========= You Won ! =========\n");
+        }
+    }
+    else{
+        printf("This move is illegal, please try again.\n");
+    }
+    return 0;
 }
 
-int Awake(bool isConsoleVersion){
-
-    isPlayingConsoleVersion = isConsoleVersion;
+int Awake(){
 
     srand(time(NULL));
 
-    if(!isPlayingConsoleVersion){
+    if(CONSOLE_VERSION == 0){
         /* Initializes the timer, audio, video, joystick,
         haptic, gamecontroller and events subsystems */
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -126,7 +126,7 @@ int Awake(bool isConsoleVersion){
     while (running)
     {
         Update();
-        if(!isPlayingConsoleVersion){
+        if(CONSOLE_VERSION == 0){
             /* Draw to window and loop with delay*/
             SDL_RenderPresent(rend);
             SDL_Delay(1000/FPS);
