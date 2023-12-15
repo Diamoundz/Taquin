@@ -1,0 +1,21 @@
+# When using this makefile make sure to first install the SDL2,SDL2_ttf and SDL2_image libraries on your GNU
+CC := gcc
+CFLAGS := -Wall -Wextra -std=c99
+LDFLAGS := -lSDL2 -lSDL2_image -lSDL2_ttf
+
+SRC_FILES := src/main.c src/game_core.c src/game_tools.c src/rendering_tools.c
+OBJ_FILES := $(SRC_FILES:.c=.o)
+EXECUTABLE := Taquin_GNU_exe
+
+.PHONY: all clean
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJ_FILES)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(OBJ_FILES) $(EXECUTABLE)
