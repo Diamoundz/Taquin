@@ -1,9 +1,6 @@
 #include "definitions.h"
 #include "game_tools.h"
 
-
-
-
 int Debug(int code){
     printf("== Debug code : %d ==\n",code);
     return 0;
@@ -18,8 +15,16 @@ int ** MakeBoard(){
         }
         board[i]=row;
     }
-    board[BOARD_SIZE-1][BOARD_SIZE-1] = -1;
+    board[BOARD_SIZE-1][BOARD_SIZE-1] = 0;
     return board;
+}
+
+int ClearBoardMem(int ** board){
+    for(int i =0; i <BOARD_SIZE;i++){
+        free(board[i]);
+    }
+    free(board);
+    return 0;
 }
 
 int GetRandomNumber(int minIncluded,int maxIncluded){
@@ -30,7 +35,7 @@ int ConsoleDisplayBoard(int ** board){
     system("clear");
     for(int i = 0; i<BOARD_SIZE; i++){
         for(int j = 0; j<BOARD_SIZE; j++){
-            if(board[i][j] != -1){
+            if(board[i][j] != 0){
                 printf("%2d%s",board[i][j],(j<BOARD_SIZE-1)?" | ":"");
             }
             else{
@@ -44,6 +49,97 @@ int ConsoleDisplayBoard(int ** board){
         printf("\n");
     }
     printf("\n");
+    return 0;
+}
+
+int ClearSaveFile(){
+    FILE * f = fopen(SAVE_FILE, "w+");
+    if(f == NULL){
+        printf("Error : The specified file does not exist.");
+        return -1;
+    }
+    fclose(f);
+    return 0;
+}
+
+int SerializeBoardToSaves(int ** board){
+    FILE * f = fopen(SAVE_FILE, "a+");
+    if(f == NULL){
+        printf("Error : The specified file does not exist.");
+        return -1;
+    }
+    for(int i = 0; i<BOARD_SIZE * BOARD_SIZE; i++){
+        fprintf(f,"%d ",board[(int)(i/BOARD_SIZE)][i%BOARD_SIZE]);
+    }
+    fputc('\n',f);
+
+    fclose(f);
+    return 0;
+}
+
+int GenerateGames(){
+    ClearSaveFile();
+    for(int i = 0; i<SAVED_BOARD_COUNT; i++){
+        int ** board = MakeBoard();
+        ShuffleBoard(board,GetRandomNumber(MIN_BOARD_SHUFFLE,MAX_BOARD_SHUFFLE));
+        SerializeBoardToSaves(board);
+        free(board);
+    }
+    return 0;
+}
+
+int GetBoardFromSaves(int ** board){
+    FILE * f = fopen(SAVE_FILE, "r");
+    if(f == NULL){
+        printf("Error : The specified file does not exist.");
+        return -1;
+    }
+    fseek(f,0,SEEK_END);
+    int charCount =ftell(f);
+    fseek(f,0,SEEK_SET);
+
+    int lineLength = (charCount-1)/(SAVED_BOARD_COUNT)+1;
+    int randomBoardIndex = GetRandomNumber(0,SAVED_BOARD_COUNT-1);
+    fseek(f,randomBoardIndex * lineLength,SEEK_SET);
+    char c;
+    int curDigitLen=0;
+    int boardIndex=0;
+
+    for(int i = 0; i< lineLength; i++){
+        c = fgetc(f);
+        if(c == ' ' && curDigitLen > 0){
+            if(boardIndex >= BOARD_SIZE*BOARD_SIZE)
+            {
+                GenerateGames();
+                GetBoardFromSaves(board);
+            }
+            else{
+                char * numberString = malloc(sizeof(char)*(curDigitLen +1));
+                fseek(f,-curDigitLen-1,SEEK_CUR);
+                for(int j = 0; j< curDigitLen; j++){
+                    c = fgetc(f);
+                    numberString[j] = c;
+                }
+                numberString[curDigitLen] = '\0';
+                board[(int)(boardIndex/BOARD_SIZE)][boardIndex%BOARD_SIZE] = atoi(numberString);
+                fseek(f,1,SEEK_CUR);
+
+                boardIndex++;
+                curDigitLen =0;
+                free(numberString);
+            }
+
+        }
+        else{
+            curDigitLen++;
+        }
+    }
+    if(boardIndex != BOARD_SIZE*BOARD_SIZE)
+    {
+        GenerateGames();
+        GetBoardFromSaves(board);
+    }
+    fclose(f);
     return 0;
 }
 
@@ -61,7 +157,6 @@ int ShuffleBoard(int ** board, int depth){
     int moves[4] = {LEFT,RIGHT,UP,DOWN};
     for(int i = 0; i<depth; i++){
         int moveId = GetRandomNumber(0,3);
-        Debug(moves[moveId]);
         if(!MakeMove(board,moves[moveId])){
             i--;
         }
@@ -95,7 +190,7 @@ int GetEmptySpaceIndex(int ** board){
     int index = -1;
     for(int i = 0; i<BOARD_SIZE; i++){
         for(int j = 0; j<BOARD_SIZE; j++){
-            if(board[i][j] == -1){
+            if(board[i][j] == 0){
                 index = i*BOARD_SIZE+j;
             }
         }
@@ -112,7 +207,7 @@ bool MakeMove(int ** board, int move){
         //move left or right
         if(col + direction <= BOARD_SIZE-1 &&  col + direction >= 0){
             board[row][col] = board[row][col + direction];
-            board[row][col + direction] = -1;
+            board[row][col + direction] = 0;
             return true;
         }
     }
@@ -121,11 +216,21 @@ bool MakeMove(int ** board, int move){
         direction-= 3;
         if(row + direction <= BOARD_SIZE-1 &&  row + direction >= 0){
             board[row][col] = board[row + direction][col];
-            board[row + direction][col] = -1;
+            board[row + direction][col] = 0;
             return true;
         }
     }
     return false;
+}
+
+int TryMakeMove(int ** board, int dir){
+    if(MakeMove(board,dir)){
+        ConsoleDisplayBoard(board);
+    }
+    else{
+        printf("This move is illegal, please try again.\n");
+    }
+    return 0;
 }
 
 int GetConsoleInput(){
