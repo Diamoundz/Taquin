@@ -1,6 +1,6 @@
 # Taquin Game
 
-This is a simple implementation of the Taquin game using SDL (Simple DirectMedia Layer) for graphics rendering. The game allows you to play the Taquin puzzle, also known as the 15-puzzle, where you need to arrange numbers in ascending order by sliding tiles into an empty space.
+This is a simple implementation of the Taquin game using SDL (Simple DirectMedia Layer) for graphics rendering. The game allows you to play the Taquin puzzle, also known as the 15-puzzle, where you need to arrange numbers in ascending order by sliding tiles into an empty space. This implementation is made so that by Modifing the pre-processor constants in the `definitions.h` file we can for example play a game of `24-puzzle`, we can also change the difficulty of the saved games. By changing **CONSOLE_VERSION** to *1* and re-compiling we can access the console version of the game where movements are made by typing 'g','d','h' and 'b'.
 
 ## Table of Contents
 - [Architecture](#architecture)
