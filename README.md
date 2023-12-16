@@ -5,11 +5,123 @@ This is a simple implementation of the Taquin game using SDL (Simple DirectMedia
 ## Table of Contents
 - [Architecture](#architecture)
 - [Makefile](#makefile)
-- [Header Files](#header-files)
 - [SDL](#sdl)
 
 ### Architecture
 
+#### Sole Header Files
+
+1. **definitions.h**
+   - Centralized location for constants, macros, and includes necessary libraries.
+   - Defines directions, board dimensions, file paths, and includes standard and SDL libraries.
+
+#### Source Files
+
+1. **main.c**
+   - Entry point of the program.
+   - Calls the `Awake` function to initialize the game environment and enters the main game loop.
+
+2. **game_core.c**
+   - Implements functions for core game logic.
+   - Checks for win conditions, handles moves, and initializes the game board.
+
+3. **game_tools.c**
+   - Implements utility functions for the game.
+   - Creates and clears the game board, shuffles the board, and serializes/deserializes game states.
+
+4. **rendering_tools.c**
+   - Implements functions for rendering images and text using SDL.
+
+#### Functions and their Purposes
+
+##### `main.c`
+
+- **Awake()**
+  - Initializes the game environment, enters the main game loop.
+  - Calls `Update` in a loop until the game is stopped.
+
+- **Stop()**
+  - Stops the game and frees resources.
+
+- **StartNewGame()**
+  - Resets the game state to start a new game.
+
+- **Start()**
+  - Initializes the game state, including creating the game board.
+
+- **Update()**
+  - Updates the game state, handles events, and refreshes the screen.
+  - Checks for win conditions and displays appropriate messages.
+
+##### `game_core.c`
+
+- **CheckIfWin()**
+  - Checks if the current state of the game board represents a win.
+
+- **MakeMove()**
+  - Attempts to make a move on the game board.
+
+- **TryMakeMove()**
+  - Tries to make a move and updates the console display if successful.
+
+##### `game_tools.c`
+
+- **MakeBoard()**
+  - Creates and initializes a new game board.
+
+- **ClearBoardMem()**
+  - Frees memory allocated for the game board.
+
+- **ShuffleBoard()**
+  - Shuffles the game board to create a solvable state.
+
+- **SerializeBoardToSaves()**
+  - Serializes the game board to a file for saving progress.
+
+- **GetBoardFromSaves()**
+  - Retrieves a game board from saved files.
+
+##### `rendering_tools.c`
+
+- **RenderImage()**
+  - Renders an image on the SDL renderer.
+
+- **WriteText()**
+  - Writes text on the renderer using a specified font, color, and position.
+
+- **DisplayBoard()**
+  - Displays the game board on the renderer.
+
+#### Overall Flow
+
+1. **Initialization:**
+   - Constants and macros are defined in `definitions.h`.
+   - SDL and other libraries are included.
+
+2. **Game Logic:**
+   - Core game logic is implemented in `game_core.c`.
+
+3. **Utility Functions:**
+   - Utility functions for board manipulation, serialization, and shuffling are in `game_tools.c`.
+
+4. **Rendering:**
+   - Rendering functions using SDL are in `rendering_tools.c`.
+
+5. **Main Loop:**
+   - The `main.c` file orchestrates the main game loop.
+   - Calls functions for initialization, updating the game state, handling events, and rendering.
+
+6. **Makefile:**
+   - Contains rules for compiling the project, creating object files, linking dependencies, and cleaning up.
+
+#### Note:
+
+- The code follows a modular structure, separating concerns into different files.
+- The use of header files helps organize declarations and definitions, promoting code readability.
+- SDL is used for graphics rendering and user input handling.
+- The Makefile simplifies the compilation and build process.
+
+This structure helps in maintaining code readability, reusability, and scalability.
 
 ### Makefile
 
