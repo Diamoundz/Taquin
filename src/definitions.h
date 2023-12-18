@@ -20,7 +20,7 @@
     #define SOURCE_PATH "./ressources/"
     #define FONT_PATH "./ressources/font.ttf"
 
-    #define BOARD_SIZE 4
+    #define BOARD_SIZE 10
     #define MIN_BOARD_SHUFFLE 55
     #define MAX_BOARD_SHUFFLE 70
     #define SAVED_BOARD_COUNT 300
