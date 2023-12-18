@@ -1,14 +1,13 @@
 #ifndef DEFINITIONS_INCLUDED
     #define DEFINITIONS_INCLUDED
 
+    #define CONSOLE_VERSION 0
 
     #define LEFT -1
     #define RIGHT 1
     #define UP 2
     #define DOWN 4
     #define NO_DIR 0
-
-    #define CONSOLE_VERSION 0
 
     #define WIDTH 1600
     #define HEIGHT 900
@@ -26,17 +25,18 @@
     #define MAX_BOARD_SHUFFLE 70
     #define SAVED_BOARD_COUNT 300
 
-    #define SDL_RECT_ALLOCATION_COUNT 50
-
+    
     #include <stdlib.h>
     #include <stdio.h>
     #include <stdbool.h>
     #include <time.h>
     #include <string.h>
 
-    #include <SDL2/SDL_ttf.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL.h>
+    #if CONSOLE_VERSION == 0
+        #include <SDL2/SDL_ttf.h>
+        #include <SDL2/SDL_image.h>
+        #include <SDL2/SDL.h>
+    #endif
 
     #ifdef _WIN32
         #include <windows.h>
