@@ -6,7 +6,6 @@
 // Define booleans as global variables for ease of manipulation
 bool running = true;
 bool isWinState = false;
-bool isAutomaticResolve = false;
 
 // Keep track of the board
 int **board = NULL;
@@ -149,20 +148,12 @@ int Update() {
     // Get events and input and refresh the screen
     ClearScreen(rend);
 
-    int inputDirection = NO_DIR;
-
-    if (!isAutomaticResolve) {
-        inputDirection = GetEvents();
-        if (inputDirection != NO_DIR) {
-            if (inputDirection != -2) {
-                TryMakeMove(board, inputDirection);
-            } else {
-                isAutomaticResolve = true;
-            }
-        }
-    } else {
-        TryMakeMove(board, GetResolutionMove(board));
+    int inputDirection = GetEvents();
+    if (inputDirection != NO_DIR) {
+        TryMakeMove(board, inputDirection);
+        
     }
+
 
     int boxSize = HEIGHT / (BOARD_SIZE + 2);
 
@@ -201,7 +192,7 @@ int Update() {
 // Function to stop the game and free resources
 int Stop() {
 #if CONSOLE_VERSION == 0
-    DestroyWindow(wind, rend);
+    DestroySDLWindow(wind, rend);
 #endif
     ClearBoardMem(board);
     return 0;
@@ -209,7 +200,6 @@ int Stop() {
 
 // Function to start a new game
 int StartNewGame() {
-    isAutomaticResolve = false;
     isWinState = false;
     ClearBoardMem(board);
     Start();
@@ -226,19 +216,11 @@ int Start() {
 
 // Function to update the game state in the console version
 int ConsoleUpdate() {
-    int inputDirection = NO_DIR;
 
-    if (!isAutomaticResolve) {
-        inputDirection = GetConsoleInput();
-        if (inputDirection != NO_DIR) {
-            TryMakeMove(board, inputDirection);
-        } else {
-            isAutomaticResolve = true;
-        }
-    } else {
-        TryMakeMove(board, GetResolutionMove(board));
+    int inputDirection = GetConsoleInput();
+    if (inputDirection != NO_DIR) {
+        TryMakeMove(board, inputDirection);
     }
-
     // Check for a win state
     if (!isWinState && CheckIfWin(board)) {
         system("clear");
@@ -260,7 +242,7 @@ int Awake() {
         return 0;
     }
 
-    wind = MakeWindow(WIDTH, HEIGHT);
+    wind = MakeSDLWindow(WIDTH, HEIGHT);
     rend = MakeRenderer(wind);
 
     TTF_Init();

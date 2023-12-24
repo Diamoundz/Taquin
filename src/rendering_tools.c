@@ -3,7 +3,7 @@
 
 #if CONSOLE_VERSION == 0
 
-    SDL_Window* MakeWindow(int width, int height){
+    SDL_Window* MakeSDLWindow(int width, int height){
         /* Create a window */
 
         SDL_Window* wind = SDL_CreateWindow("Taquin",
@@ -42,7 +42,7 @@
         return 0;
     }
 
-    int DestroyWindow(SDL_Window * wind, SDL_Renderer * rend){
+    int DestroySDLWindow(SDL_Window * wind, SDL_Renderer * rend){
         SDL_DestroyRenderer(rend);
         SDL_DestroyWindow(wind);
         SDL_Quit();

@@ -1,7 +1,13 @@
 #ifndef DEFINITIONS_INCLUDED
     #define DEFINITIONS_INCLUDED
 
-    #define CONSOLE_VERSION 0
+    #define CONSOLE_VERSION 1
+    #if CONSOLE_VERSION == 0
+        #include <SDL2/SDL_ttf.h>
+        #include <SDL2/SDL_image.h>
+        #include <SDL2/SDL.h>
+    #endif
+
 
     #define LEFT -1
     #define RIGHT 1
@@ -20,10 +26,10 @@
     #define SOURCE_PATH "./ressources/"
     #define FONT_PATH "./ressources/font.ttf"
 
-    #define BOARD_SIZE 10
+    #define BOARD_SIZE 4
     #define MIN_BOARD_SHUFFLE 55
     #define MAX_BOARD_SHUFFLE 70
-    #define SAVED_BOARD_COUNT 300
+    #define SAVED_BOARD_COUNT 30
 
     
     #include <stdlib.h>
@@ -32,11 +38,6 @@
     #include <time.h>
     #include <string.h>
 
-    #if CONSOLE_VERSION == 0
-        #include <SDL2/SDL_ttf.h>
-        #include <SDL2/SDL_image.h>
-        #include <SDL2/SDL.h>
-    #endif
 
     #ifdef _WIN32
         #include <windows.h>

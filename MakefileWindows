@@ -1,7 +1,8 @@
 # command : mingw32-make -f MakefileWindows
 CC := gcc
-CFLAGS := -Wall -Wextra -std=c99 -I./SDL2/include 
-LDFLAGS :=  -L./SDL2/lib -lSDL2 -L./SDL2_ttf/lib -lSDL2_ttf -L./SDL2_image/lib -lSDL2_image
+CFLAGS := -Wall -Wextra -std=c99 -I./SDL2/include
+LDFLAGS :=  -L./SDL2/lib -L./SDL2_ttf/lib -L./SDL2_image/lib
+LDLIBS := -lSDL2 -lSDL2_ttf -lSDL2_image
 
 SRC_FILES := src/main.c src/game_core.c src/game_tools.c src/rendering_tools.c
 OBJ_FILES := $(SRC_FILES:.c=.o)
@@ -12,7 +13,7 @@ EXECUTABLE := Taquin_Windows.exe
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJ_FILES)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDLIBS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<

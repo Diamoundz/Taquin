@@ -37,7 +37,7 @@ int GetRandomNumber(int minIncluded, int maxIncluded) {
 
 // Function to display the game board in the console
 int ConsoleDisplayBoard(int **board) {
-    system("clear");
+    fflush(stdout);
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (board[i][j] != 0) {
@@ -265,8 +265,6 @@ int GetConsoleInput() {
         case 'b':
             choice = DOWN;
             break;
-        case 'r':
-
         default:
             printf("Error: Please enter one of the following - g(left), d(right), h(up), b(down)\n");
             break;
@@ -274,25 +272,3 @@ int GetConsoleInput() {
     return choice;
 }
 
-// Function to get a random move for automatic resolution
-int GetResolutionMove(int **board) {
-    int randNum = GetRandomNumber(0, 3);
-    int choice;
-    switch (randNum) {
-        case 0:
-            choice = LEFT;
-            break;
-        case 1:
-            choice = RIGHT;
-            break;
-        case 2:
-            choice = UP;
-            break;
-        case 3:
-            choice = DOWN;
-            break;
-        default:
-            break;
-    }
-    return choice;
-}
